@@ -163,7 +163,7 @@ def _clean_whitespace(content):
     return content
 
 def extract_text(content):
-    text = _clean_macro(text)
+    text = _clean_macro(content)
     text = _clean_html(text)
     text = _clean_link(text)
     text = _clean_special_markup(text)
