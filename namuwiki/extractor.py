@@ -2,6 +2,7 @@ import re
 import urllib.parse
 
 _patterns = {
+    # Reference: https://namu.wiki/w/%EB%82%98%EB%AC%B4%EC%9C%84%ED%82%A4:%EB%AC%B8%EB%B2%95%20%EB%8F%84%EC%9B%80%EB%A7%90
     'macro': [
         r'\[\[br\]\]',
         r'\[\[(?:date|datetime|include|tableofcontents|목차|footnote|각주|wikicommons|youtube|nicovideo|html|navigation)(?:\([^\]]*\))?\]\]',
@@ -24,10 +25,12 @@ _patterns = {
         r'[a-z]+\:(?!//)([^\" \n]+)', # interwiki
         r'[a-z]+\:(?!//)\"(.+)(?<!\\)\"', # interwiki
     ],
-    'special_markup': [
-        # footnote
+    'footnote':[
         r'^[ \t]*\[\*[^ ]*[ \t]*([^\[\]]*)\]', # at the beginning
         r'\[\*[^ ]*[ \t]*([^\[\]]*)\][ \t]*\.?[ \t]*$', # at the end
+        r'\[\*[^ ]*[ \t]*([^\[\]]*)\]', # in a sentence
+    ],
+    'special_markup': [
         # deletion
         r'^[ \t]*~~(?!~)(.*?)~~', # at the beginning
         r'~~(?!~)(.*?)~~[ \t]*\.?[ \t]*$', # at the end
@@ -74,8 +77,6 @@ _patterns = {
         r'\{\{\|([\s\S]*?)\|\}\}',
         # quote
         r'\>(.*)',
-        # footnote in a sentence
-        r'\[\*[^ ]*[ \t]*([^\[\]]*)\]',
         # plain text
         r'\{\{\{([\s\S]*?)\}\}\}',
         # math
@@ -129,6 +130,19 @@ def _clean_link(content):
 
     return content
 
+def _clean_footnote(content):
+    footnotes = []
+    def replacement(match):
+        footnotes.append(match.group(1))
+        return ''
+
+    for pattern in _patterns['footnote']:
+        content = pattern.sub(replacement, content)
+
+    content += '\n'
+    content += '\n'.join(footnotes)
+    return content
+
 def _clean_special_markup(content):
     for pattern in _patterns['special_markup']:
         content = pattern.sub(lambda match: '\n' + match.group(1) + '\n', content)
@@ -166,6 +180,7 @@ def extract_text(content):
     text = _clean_macro(content)
     text = _clean_html(text)
     text = _clean_link(text)
+    text = _clean_footnote(text)
     text = _clean_special_markup(text)
     text = _clean_markup(text)
     text = _clean_whitespace(text)
