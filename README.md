@@ -1,11 +1,14 @@
 # Namu Wiki Extractor
 This module strips the namu mark from a namu wiki document and extracts its plain text only.
 
-# Environment
+## Requirement
 - Python 3
 
-# Usage
-## Simple
+## Installation
+	pip install namu-wiki-extractor
+
+## Usage
+### Basic
     import json
     from namuwiki.extractor import extract_text
 
@@ -15,7 +18,7 @@ This module strips the namu mark from a namu wiki document and extracts its plai
     document = namu_wiki[1]
     plain_text = extract_text(document['text'])
 
-## Multiprocessing
+### Multiprocessing
     import json
     from multiprocessing import Pool
 
