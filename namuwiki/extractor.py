@@ -94,7 +94,7 @@ def _clean_whitespace(source):
     # remove duplicated whitespaces
     source = re.sub(r'(\s)\1+', r'\1', source)
 
-    return source
+    return source.strip()
 
 def extract_text(source):
     environment = globals()
