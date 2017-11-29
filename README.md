@@ -1,5 +1,5 @@
 # Namu Wiki Extractor
-This library strips all [namu mark](https://namu.wiki/w/나무위키:문법%20도움말) from a namu wiki document and extracts its plain text only.
+This library strips all [namu marks](https://namu.wiki/w/나무위키:문법%20도움말) from a namu wiki document and extracts its plain text only.
 
 ## Requirement
 - Python 3
@@ -38,7 +38,7 @@ This library strips all [namu mark](https://namu.wiki/w/나무위키:문법%20�
 
 ## API
 ### namuwiki.extractor.extract_text(source)
-Strips all namu mark from `source` and extracts its plain text only. Returns extracted plain text.
+Strips all namu marks from `source` and extracts its plain text only. Returns extracted plain text.
 
 #### Parameter
 - `source`: text from a namu wiki document
