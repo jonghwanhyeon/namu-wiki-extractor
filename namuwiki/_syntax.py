@@ -8,7 +8,7 @@ _patterns = {
     ],
 
     'html': [
-        r'\{\{\{\#\!html[ \t\n]+(?P<text>[\s\S]*?)\}\}\}',
+        r'\{\{\{\#\!html[ \t\n]*(?P<text>[\s\S]*?)\}\}\}',
         r'\[\[html[ \t]*\((?P<text>[^\)]*)\)\]\]', # rigvedawiki syntax
     ],
 
