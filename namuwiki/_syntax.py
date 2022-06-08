@@ -34,7 +34,7 @@ _patterns = {
     
     'bold': r"'''(?P<text>.*?)'''",
     'italic': r"''(?P<text>.*?)''",
-    'deletion': r'(~~|--)(?P<text>.*?)\1',
+    'deletion': r'(~~~|~~|--)(?P<text>.*?)\1',
     'underline': r'__(?P<text>.*?)__',
     'superscript': r'\^\^(?P<text>.*?)\^\^',
     'subscript': r',,(?P<text>.*?),,',
