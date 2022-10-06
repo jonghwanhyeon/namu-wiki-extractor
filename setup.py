@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='namu-wiki-extractor',
-    version='0.2.3',
+    version='0.3.0',
     description='A library to extract plaintexts from the namu wiki dump',
-    url='https://github.com/hyeon0145/namu-wiki-extractor',
+    url='https://github.com/jonghwanhyeon/namu-wiki-extractor',
     author='Jonghwan Hyeon',
     author_email='hyeon0145@gmail.com',
     license='MIT',
