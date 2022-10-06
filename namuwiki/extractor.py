@@ -2,6 +2,7 @@ import re
 from dataclasses import dataclass
 from typing import Callable, List, Match, Pattern, Union
 
+from . import macros
 from ._syntax import _patterns, _priority
 
 
@@ -44,7 +45,12 @@ def _strip_default(patterns: List[Pattern], document: Document) -> Document:
 
 
 def _strip_macro(patterns: List[Pattern], document: Document) -> Document:
-    document.text = _apply_patterns(patterns, r" ", document.text)
+    def replacement(match: Match) -> str:
+        groups = match.groupdict()
+        macro = getattr(macros, groups["name"]) if hasattr(macros, groups["name"]) else macros.default
+        return macro(groups.get("parameter", ""))
+
+    document.text = _apply_patterns(patterns, replacement, document.text)
     return document
 
 
