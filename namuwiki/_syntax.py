@@ -4,7 +4,7 @@ from typing import Dict, List, Pattern, Tuple, Union
 _patterns: Dict[str, List[Union[str, Pattern]]] = {
     "macro": [
         r"\[\[(?P<name>date|datetime|br|include|목차|tableofcontents|각주|footnote|pagecount|youtube|nicovideo|wikicommons)(?:\(.+?\))?\]\]",  # rigvedawiki syntax
-        r"\[(?P<name>date|datetime|br|include|목차|tableofcontents|각주|footnote|pagecount|youtube)(?:\(.+?\))?\]",
+        r"\[(?P<name>date|datetime|br|clearfix|include|목차|tableofcontents|각주|footnote|pagecount|youtube)(?:\(.+?\))?\]",
         r"\[\[(?P<name>분류)\:.*?\]\]",  # acts like macro
     ],
     "html": [
