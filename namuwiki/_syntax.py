@@ -75,9 +75,9 @@ _priority: Tuple[str] = (
     "math",
     "text_box",  # before table
     "table",  # before list
+    "quote", # before list
     "unordered_list",
     "ordered_list",
-    "quote",
     "syntax",
     "wiki",
     "folding",
