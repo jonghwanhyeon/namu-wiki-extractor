@@ -35,7 +35,7 @@ _patterns: Dict[str, List[Union[str, Pattern]]] = {
     "superscript": r"\^\^(?P<text>.*?)\^\^",
     "subscript": r",,(?P<text>.*?),,",
     "text_size": r"\{\{\{[\+\-]\d+[ \t]+(?P<text>.*?)\}\}\}",
-    "text_color": r"\{\{\{\#(?:[0-9a-f]+|[a-z]+)[ \t]+(?P<text>.*?)\}\}\}",
+    "text_color": r"\{\{\{\#(?:[0-9a-f]+|[a-z]+)(?:\,\#(?:[0-9a-f]+|[a-z]+))?[ \t]+(?P<text>.*?)\}\}\}",
     "math": [
         r"<math>.*?</math>",
         r"\$.*?\$",  # rigvedawiki syntax
