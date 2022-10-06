@@ -1,11 +1,14 @@
 import re
+from typing import List, Match, Pattern
+
 from ._syntax import _patterns, _priority
 
-def _strip_tags(source):
+
+def _strip_tags(source: str) -> str:
     return re.sub(r'</?[^>]+>', '', source)
 
-def _strip_default(patterns, source):
-    def replacement(match):
+def _strip_default(patterns: List[Pattern], source: str) -> str:
+    def replacement(match: Match) -> str:
         # extra whitespaces will be removed
         return ' {text} '.format(text=match.groupdict().get('text', ''))
 
@@ -14,14 +17,14 @@ def _strip_default(patterns, source):
 
     return source
 
-def _strip_macro(patterns, source):
+def _strip_macro(patterns: List[Pattern], source: str) -> str:
     for pattern in patterns:
         source = pattern.sub(r' ', source)
 
     return source
 
-def _strip_html(patterns, source):
-    def replacement(match):
+def _strip_html(patterns: List[Pattern], source: str) -> str:
+    def replacement(match: Match) -> str:
         return _strip_tags(match.group('text'))
 
     for pattern in patterns:
@@ -29,8 +32,8 @@ def _strip_html(patterns, source):
 
     return source
 
-def _strip_inline(patterns, source):
-    def replacement(match):
+def _strip_inline(patterns: List[Pattern], source: str) -> str:
+    def replacement(match: Match) -> str:
         # extra whitespaces will be removed
         return match.groupdict().get('text', '')
 
@@ -48,9 +51,9 @@ _strip_subscript = _strip_inline
 _strip_text_size = _strip_inline
 _strip_text_color = _strip_inline
 
-def _strip_deletion(patterns, source):
+def _strip_deletion(patterns: List[Pattern], source: str) -> str:
     items = []
-    def replacement(match):
+    def replacement(match: Match) -> str:
         items.append(match.group('text'))
         return ''
 
@@ -63,10 +66,10 @@ def _strip_deletion(patterns, source):
 
     return source
 
-def _strip_footnote(patterns, source):
-    def _do_strip_footnote(source):
+def _strip_footnote(patterns: List[Pattern], source: str) -> str:
+    def _do_strip_footnote(source: str):
         items = []
-        def replacement(match):
+        def replacement(match: Match) -> str:
             items.append(match.groupdict().get('text', ''))
             return ''
 
@@ -87,16 +90,16 @@ def _strip_footnote(patterns, source):
 
     return source
 
-def _clean_whitespace(source):
+def _clean_whitespace(source: str) -> str:
     # strip whitespaces line by line
     source = re.sub(r'^[ \t]*(.*?)[ \t]*$', r'\1', source, flags=re.MULTILINE)
-    
+
     # remove duplicated whitespaces
     source = re.sub(r'(\s)\1+', r'\1', source)
 
     return source.strip()
 
-def extract_text(source):
+def extract_text(source: str) -> str:
     environment = globals()
 
     for item in _priority:

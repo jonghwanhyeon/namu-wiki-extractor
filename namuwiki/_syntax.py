@@ -1,6 +1,7 @@
 import re
+from typing import Dict, List, Pattern, Tuple, Union
 
-_patterns = {
+_patterns: Dict[str, List[Union[str, Pattern]]] = {
     'macro': [
         r'\[\[(?P<name>date|datetime|br|include|목차|tableofcontents|각주|footnote|pagecount|youtube|nicovideo|wikicommons)(?:\(.+?\))?\]\]', # rigvedawiki syntax
         r'\[(?P<name>date|datetime|br|include|목차|tableofcontents|각주|footnote|pagecount|youtube)(?:\(.+?\))?\]',
@@ -26,12 +27,12 @@ _patterns = {
         # [[문서#s-2.3]]
         r'\[\[(?P<text>[^\#][^\]]*?)(?:\#[^\]]*)?\]\]',
         # [[#s-1]]
-        r'\[\[\#(?P<text>[^\]]*)\]\]', 
+        r'\[\[\#(?P<text>[^\]]*)\]\]',
     ],
 
     'horizontal_rule': r'-{4,10}',
     'heading': r'={1,}[ \t]+(?P<text>.*?)[ \t]+\={1,}',
-    
+
     'bold': r"'''(?P<text>.*?)'''",
     'italic': r"''(?P<text>.*?)''",
     'deletion': r'(~~~|~~|--)(?P<text>.*?)\1',
@@ -62,15 +63,15 @@ _patterns = {
     'redirect': r'\#(?:redirect|넘겨주기)[ \t\n]+.*',
 
     'footnote': [
-        r'\[\*[^ \t]+\]', 
+        r'\[\*[^ \t]+\]',
         r'\[\*[^ \t]*[ \t]+(?P<text>[^\[\]]*)\]',
     ],
 }
 
-_priority = (
+_priority: Tuple[str] = (
     'macro',
     'html', # before link
-    'image', # before link 
+    'image', # before link
     'link',
     'horizontal_rule', # before deletion
     'heading',
@@ -86,7 +87,7 @@ _priority = (
     'text_box', # before table
     'table', # before list
     'unordered_list',
-    'ordered_list', 
+    'ordered_list',
     'quote',
     'syntax',
     'wiki',
@@ -100,7 +101,7 @@ _priority = (
 # compile regular expressions
 for name in _patterns:
     if not isinstance(_patterns[name], list):
-        _patterns[name] = [ _patterns[name] ] 
+        _patterns[name] = [ _patterns[name] ]
 
     _patterns[name] = [
         re.compile(pattern, re.IGNORECASE | re.MULTILINE)
